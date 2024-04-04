@@ -82,8 +82,12 @@
         formControlName="password"
         class="form-field__input"
         id="password">
-      @if (formGroup.controls['repeatPass'].hasError('required') && formGroup.controls['repeatPass'].dirty) {
+      @if (formGroup.controls['password'].hasError('required') && formGroup.controls['password'].dirty) {
         <mat-error>Incorrect value</mat-error>
+      } @else if (formGroup.controls['password'].hasError('passwordLength') && formGroup.controls['password'].dirty) {
+        <mat-error>Password should be not smaller than 8</mat-error>
+      } @else if (formGroup.controls['password'].hasError('passwordCharacters') && formGroup.controls['password'].dirty) {
+        <mat-error>Password should contain at least one number and one letter</mat-error>
       }
     </div>
     <div class="form-field" appRequired>
@@ -94,9 +98,12 @@
         formControlName="repeatPass"
         class="form-field__input"
         id="repeatPass">
-      @if (
-formGroup.controls['repeatPass'].hasError('required') && formGroup.controls['repeatPass'].dirty) {
+      @if (formGroup.controls['repeatPass'].hasError('required') && formGroup.controls['repeatPass'].dirty) {
         <mat-error>Incorrect value</mat-error>
+      }  @else if (formGroup.controls['repeatPass'].hasError('passwordLength') && formGroup.controls['repeatPass'].dirty) {
+        <mat-error>Password should be not smaller than 8</mat-error>
+      } @else if (formGroup.controls['repeatPass'].hasError('passwordCharacters') && formGroup.controls['repeatPass'].dirty) {
+        <mat-error>Password should contain at least one number and one letter</mat-error>
       }
     </div>
     @if (formGroup.controls['repeatPass'].value && formGroup.controls['password'].value && !isPasswordsMatch) {
