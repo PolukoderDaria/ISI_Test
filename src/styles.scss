@@ -1,0 +1,126 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$isi-test-primary: mat.define-palette(mat.$indigo-palette);
+$isi-test-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$isi-test-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$isi-test-theme: mat.define-light-theme((
+  color: (
+    primary: $isi-test-primary,
+    accent: $isi-test-accent,
+    warn: $isi-test-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($isi-test-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.form-field__select {
+  span span {
+    margin-left: 16px;
+  }
+
+  > div {
+    bottom: 4px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.custom-toast {
+  position: fixed;
+  top: 46px;
+  right: 46px;
+  border-radius: 6px;
+  color: #fff;
+  padding: 22px 26px;
+
+  &.success {
+    background: #66BB6A 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 15px #4CAF505C;
+  }
+
+  &.error {
+    background: #EF7DA0 0% 0% no-repeat padding-box;
+    box-shadow: 0px 10px 15px #EF7DA05C;
+  }
+}
+
+.mat-mdc-row, .mdc-data-table__content {
+  cursor: pointer;
+  background: #F4F5F8 0% 0% no-repeat padding-box !important;
+
+  .mat-mdc-cell {
+    border-bottom-color: #fff;
+    font: normal normal normal 13px/16px Helvetica;
+    letter-spacing: 0px;
+    color: #3F4254;
+  }
+}
+
+.mat-mdc-table {
+  padding-bottom: 78px;
+}
+
+.mat-mdc-header-cell {
+  font: normal normal bold 13px/16px Helvetica;
+  letter-spacing: 0px;
+  color: #A4A4B5;
+  text-transform: uppercase;
+}
+
+.page-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  &__title {
+    font-size: 54px;
+    color: #EF7DA0;
+  }
+
+  &__text {
+    font-size: 32px;
+  }
+}

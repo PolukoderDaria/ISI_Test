@@ -1,0 +1,117 @@
+<div class="form-wrapper">
+  <header class="form-header">
+    <span class="form-header__text">
+      {{ isNewUserPage ? 'Create new user' : 'Edit user' }}
+    </span>
+    <mat-icon
+      class="form-header__icon"
+      aria-hidden="false"
+      aria-label="Close icon"
+      fontIcon="close"
+      (click)="close()">
+    </mat-icon>
+  </header>
+  <form [formGroup]="formGroup" class="form-content">
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="username">Username</label>
+      <input
+        matInput
+        formControlName="username"
+        class="form-field__input"
+        id="username">
+      @if (formGroup.controls['username'].hasError('required') && formGroup.controls['username'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="firstName">First name</label>
+      <input
+        matInput
+        formControlName="firstName"
+        class="form-field__input"
+        id="firstName">
+      @if (formGroup.controls['firstName'].hasError('required') && formGroup.controls['firstName'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="lastName">Last name</label>
+      <input
+        matInput
+        formControlName="lastName"
+        class="form-field__input"
+        id="lastName">
+      @if (formGroup.controls['lastName'].hasError('required') && formGroup.controls['lastName'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    <div class="form-field form-field_email" appRequired>
+      <label class="form-field__label" for="email">Email</label>
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        class="form-field__input"
+        id="email">
+      <mat-icon fontIcon="alternate_email"></mat-icon>
+      @if (formGroup.controls['email'].hasError('required') && formGroup.controls['email'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      } @else if (
+        formGroup.controls['email'].hasError('invalidEmail') && formGroup.controls['email'].value && formGroup.controls['email'].touched) {
+        <mat-error>Please add &#64;</mat-error>
+      } 
+    </div>
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="type">Type</label>
+      <mat-select class="form-field__input form-field__select" formControlName="type">
+        @for (type of (types$ | async)!; track type) {
+          <mat-option [value]="type.key">
+            {{ type.label }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (formGroup.controls['type'].hasError('required') && formGroup.controls['type'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="password">Password</label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        class="form-field__input"
+        id="password">
+      @if (formGroup.controls['repeatPass'].hasError('required') && formGroup.controls['repeatPass'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    <div class="form-field" appRequired>
+      <label class="form-field__label" for="repeatPass">Repeat password</label>
+      <input
+        matInput
+        type="password"
+        formControlName="repeatPass"
+        class="form-field__input"
+        id="repeatPass">
+      @if (
+formGroup.controls['repeatPass'].hasError('required') && formGroup.controls['repeatPass'].dirty) {
+        <mat-error>Incorrect value</mat-error>
+      }
+    </div>
+    @if (formGroup.controls['repeatPass'].value && formGroup.controls['password'].value && !isPasswordsMatch) {
+      <mat-error>Passwords should be the same</mat-error>
+    }
+  </form>
+  <div class="form-footer" [class.new]="isNewUserPage">
+    <button class="form__button form__button_delete" *ngIf="!isNewUserPage" (click)="deleteUser()">
+      Delete
+    </button>
+    <button
+      class="form__button form__button_submit"
+      (click)="createUser()"
+      [disabled]="formGroup.invalid || !isPasswordsMatch || formGroup.pristine">
+      {{ isNewUserPage ? 'Create' : 'Save' }}
+    </button>
+  </div>
+</div>
