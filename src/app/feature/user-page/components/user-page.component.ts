@@ -6,6 +6,7 @@ import { MappingItem } from "../../list-page/models/mapping.interface";
 import { UsersService } from "../../../core/services/users.service";
 import { EmailValidator } from "../../../shared/validators/email.validator";
 import { UserItem } from "../../list-page/models/user.interface";
+import { passwordValidator } from "../../../shared/validators/password.validator";
 
 @Component({
   selector: 'app-user-page',
@@ -97,8 +98,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, EmailValidator]],
       type: ['', Validators.required],
-      password: ['', Validators.required],
-      repeatPass: ['', Validators.required],
+      password: ['', [Validators.required, passwordValidator()]],
+      repeatPass: ['', [Validators.required, passwordValidator()]],
     });
   }
 }
